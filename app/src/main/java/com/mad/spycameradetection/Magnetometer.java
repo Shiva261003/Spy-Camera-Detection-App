@@ -25,9 +25,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-/**
- * SensorEventListener :- it is used for receiving notifications from the SensorManager when sensor values have changed
- */
 public class Magnetometer extends AppCompatActivity implements SensorEventListener {
 
 
@@ -39,13 +36,9 @@ public class Magnetometer extends AppCompatActivity implements SensorEventListen
 
     private double magD;
 
-    /**
-     * Sensors :- Android sensors are virtual devices that provide data coming from a set of physical sensors:
-     * accelerometers, gyroscopes, magnetometers, barometer, humidity, pressure, light, proximity and heart rate sensors.
-     */
     private Sensor magnetometer ;
 
-    private SensorManager sensorManager; // read about SensorManger just by ttapping on where it is used.
+    private SensorManager sensorManager; 
     Boolean flag = false;
     double prevx = 0f;
 
@@ -119,8 +112,6 @@ public class Magnetometer extends AppCompatActivity implements SensorEventListen
         Speed.addColoredRange(80, 90, Color.RED);
         Speed.addColoredRange(90, 100, Color.GREEN);
 
-
-
         magR = (TextView) findViewById(R.id.value);
         show_conditions = findViewById( R.id.show_conditions );
         x_cor = findViewById( R.id.x_cor );
@@ -128,16 +119,12 @@ public class Magnetometer extends AppCompatActivity implements SensorEventListen
         z_cor = findViewById( R.id.z_cor );
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
-
-
-        // getDefaultSensor, SENSOR_DELAY_NORMAL, TYPE_MAGNETIC_FIELD and registerListener:- read by just tapping on it.
         magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         if (magnetometer != null){
             sensorManager.registerListener(Magnetometer.this,magnetometer,SensorManager.SENSOR_DELAY_NORMAL);
         }else {
             magR.setText("Magnetometer not Supported");
         }
-
 
     }
 
@@ -150,20 +137,10 @@ public class Magnetometer extends AppCompatActivity implements SensorEventListen
         if (sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
             double x;
 
-            // sqrt = for finding square root
             x = sqrt (event.values[0]*event.values[0]+event.values[1]*event.values[1]+event.values[2]*event.values[2]);
 
-
-            /**
-             * BigDecimal :- It consists of an arbitrary precision integer unscaled value and a 32-bit integer scale.
-             * If zero or positive, the scale is the number of digits to the right of the decimal point.
-             * If negative, the unscaled value of the number is multiplied by ten to the power of the negation of the scale.
-             */
-            // for setting precision of decimal number
             BigDecimal bd = new BigDecimal(x).setScale(0, RoundingMode.HALF_UP);
             double newx = bd.doubleValue();
-
-
 
             if(newx>0 && newx<100){
                 Speed.setSpeed(newx, 1, 1);

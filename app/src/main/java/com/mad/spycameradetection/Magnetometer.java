@@ -95,12 +95,10 @@ public class Magnetometer extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        // configure value range and ticks
         Speed.setMaxSpeed(100);
         Speed.setMajorTickStep(10);
         Speed.setMinorTicks(0);
 
-        // Configure value range colors
         Speed.addColoredRange(0, 10, Color.GREEN);
         Speed.addColoredRange(10, 20, Color.YELLOW);
         Speed.addColoredRange(20, 30, Color.RED);
@@ -149,7 +147,6 @@ public class Magnetometer extends AppCompatActivity implements SensorEventListen
                 Speed.setSpeed (100,1,1);
             }
             magR.setText(Double.toString(newx) + " μT");
-            //x_cor.setText(String.format( "%0f", event.values[0]) );
 
             BigDecimal bdx = new BigDecimal(event.values[0]).setScale(0, RoundingMode.HALF_UP);
             double new_x = bdx.doubleValue();
@@ -159,13 +156,13 @@ public class Magnetometer extends AppCompatActivity implements SensorEventListen
             BigDecimal bdy = new BigDecimal(event.values[1]).setScale(0, RoundingMode.HALF_UP);
             double new_y = bdy.doubleValue();
             y_cor.setText(Double.toString(new_y));
-            y_cor.setBackgroundColor( Color.RED );
+            y_cor.setBackgroundColor( Color.YELLOW );
 
 
             BigDecimal bdz = new BigDecimal(event.values[2]).setScale(0, RoundingMode.HALF_UP);
             double new_z = bdz.doubleValue();
             z_cor.setText(Double.toString(new_z));
-            z_cor.setBackgroundColor( Color.YELLOW );
+            z_cor.setBackgroundColor( Color.RED );
 
 
             double Pd=70d;
@@ -174,18 +171,18 @@ public class Magnetometer extends AppCompatActivity implements SensorEventListen
                 mediaPlayer=null;
                 mediaPlayer = MediaPlayer.create(this, R.raw.beep);
                 mediaPlayer.start();
-                show_conditions.setText( "Potential electronic device detected" );
+                show_conditions.setText( "Electronic device detected" );
 
             }
             else if(Double.compare (x,Fd)>0){
                 mediaPlayer=null;
                 mediaPlayer = MediaPlayer.create(this, R.raw.beepd);
                 mediaPlayer.start();
-                show_conditions.setText( "Finally electronic device detected" );
+                show_conditions.setText( " Device detected" );
 
             }else {
                 mediaPlayer = null;
-                show_conditions.setText ("No Potential electronic device detected");
+                show_conditions.setText ("No electronic device detected");
             }
 
 
